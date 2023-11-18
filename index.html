@@ -7,6 +7,7 @@
 </head>
 <body>
   <div class="container">
+    <div class="row mb-3 text-center"></div>
     <div class="row mb-3 text-center">
         <h1>Calculadora de %</h1>
         <small class="text-body-secondary">Calculadora de porcentagem de RM para execução de treinos.</small>
@@ -29,7 +30,7 @@
       <form id="calculator">
         <div class="row form-floating mb-3">
           <input type="text" class="form-control" id="lpo" name="lpo" placeholder="N">
-          <label for="lpo">Referência Carga (kg)</label>
+          <label for="lpo">Referência de Carga (kg)</label>
         </div>
         <!-- <div class="row mb-3">
           <div class="form-check form-switch">
@@ -38,13 +39,13 @@
           </div>
         </div> -->
         <div class="d-grid gap-2 row mb-3">
-          <button type="button" class="btn btn-primary" onclick="calculaLPO()">Chama!</button>
+          <button type="button" class="btn btn-primary" onclick="calculaLPO()">Calcular %</button>
         </div>
       </form>
 
       <div class="row mb-3">
         <div class="table-responsive">
-          <table id="tabelaLPO" class="text-center table table-striped table-hover">
+          <table id="tabelaLPO" class="text-center table table-striped table-hover" style="display: none;">
             <thead>
               <tr>
                 <th scope="col">%</th>
@@ -64,16 +65,16 @@
       <form id="calculator">
         <div class="row form-floating mb-3"">
           <input type="text" id="corrida" name="corrida" class="form-control" placeholder="mm:ss">
-          <label for="corrida">Referência Corrida (mm:ss)</label>
+          <label for="corrida">Referência de Ritmo (mm:ss)</label>
         </div>
         <div class="d-grid gap-2 row mb-3">
-          <button type="button" class="btn btn-primary" onclick="calculaCorrida()">Chama!</button>
+          <button type="button" class="btn btn-primary" onclick="calculaCorrida()">Calcular %</button>
         </div>
       </form>
 
       <div class="row mb-3">
         <div class="table-responsive">
-          <table id="tabelaCorrida" class="text-center table table-striped table-hover">
+          <table id="tabelaCorrida" class="text-center table table-striped table-hover" style="display: none;">
             <thead>
               <tr>
                 <th scope="col">%</th>
@@ -88,141 +89,13 @@
         </div>
       </div>
     </div>
+  
+    <footer class=" mb-3 text-end">
+      <span class="badge bg-dark bg-opacity-100">Desenvolvido por Gilbran Andrade</span>
+    </footer>
   </div>
 
-
-
-  
-
-
-
-
-
-
-
-
-
-
-  
-  
-
-  <script>
-    function calculaLPO() {
-      var corrida = (document.getElementById('corrida').value).split(":");
-      var lpo = parseFloat(document.getElementById('lpo').value);
-
-      var tabela = document.getElementById('tabelaLPO').getElementsByTagName('tbody')[0];
-
-      while (tabela.rows.length > 0) {
-        tabela.deleteRow(0);
-      }
-
-      var titulos = ["120%", "115%", "110%", "105%", "100%", "95%", "90%", "85%", "80%", "75%", "70%", "65%", "60%", "55%", "50%", "45%", "40%"];
-
-      /* LPO */
-  
-      var porcentagem = 1.2;
-      
-      for (var i = 0; i < titulos.length; i++) {
-        // insere linha
-        var linha = tabela.insertRow(-1);
-
-        // insere coluna
-        var col1 = linha.insertCell(0);
-        var col2 = linha.insertCell(1);
-        var col3 = linha.insertCell(2);
-
-        col1.innerHTML = titulos[i];
-        
-        col2.innerHTML = (lpo * porcentagem).toFixed(0) + " kg"; // .toFixed controla as casas decimais
-
-        col3.innerHTML = (lpo * porcentagem * 2.20462262185).toFixed(0) + " lb";
-
-        porcentagem -= 0.05;
-      }
-    }
-
-
-
-
-    function calculaCorrida() {
-      var corrida = (document.getElementById('corrida').value).split(":");
-      var lpo = parseFloat(document.getElementById('lpo').value);
-
-      var tabela = document.getElementById('tabelaCorrida').getElementsByTagName('tbody')[0];
-
-      while (tabela.rows.length > 0) {
-        tabela.deleteRow(0);
-      }
-
-      var titulos = ["120%", "115%", "110%", "105%", "100%", "95%", "90%", "85%", "80%", "75%", "70%", "65%", "60%", "55%", "50%", "45%", "40%"];
-
-      /* Corrida */
-      var porcentagem = 0.8;
-
-
-      var min = parseInt(corrida[0]);
-      var seg = parseInt(corrida[1]);
-      tempoTotal = (min * 60) + seg;
-      
-      for (var i = 0; i < titulos.length; i++) {
-        // insere linha
-        var linha = tabela.insertRow(-1);
-
-        // insere coluna
-        var col1 = linha.insertCell(0);
-        var col2 = linha.insertCell(1);
-        var col3 = linha.insertCell(2);
-
-        col1.innerHTML = titulos[i];
-
-        novoTempo = tempoTotal * porcentagem;
-        min = Math.floor(novoTempo / 60);
-        seg = novoTempo - (min * 60);
-        
-
-        col2.innerHTML = min.toFixed(0) + ":" + seg.toFixed(0).padStart(2, '0') + " min/km";
-
-        col3.innerHTML = (60 / (novoTempo/60)).toFixed(1) + " km/h";
-
-        porcentagem += 0.05;
-      }
-    }
-
-    function changeActive(clickedElement, elementToShow) {
-      var paginationItems = document.querySelectorAll('#paginacao .page-item');
-
-      paginationItems.forEach(function(item) {
-        item.classList.remove('active');
-      });
-
-      var parentLi = clickedElement.parentElement;
-      parentLi.classList.add('active');
-
-      if (elementToShow == 'formCorrida'){
-        var elementsToHide = document.querySelectorAll('[id^="formLPO"]');
-        var elementToDisplay = document.getElementById(elementToShow);
-        elementsToHide.forEach(function(element) {
-          element.style.display = 'none';
-        });
-
-        
-        if (elementToDisplay) {
-          elementToDisplay.style.display = 'block';
-        }
-      } else {
-        var elementsToHide = document.querySelectorAll('[id^="formCorrida"]');
-        var elementToDisplay = document.getElementById(elementToShow);
-        elementsToHide.forEach(function(element) {
-          element.style.display = 'none';
-        });
-
-        
-        if (elementToDisplay) {
-          elementToDisplay.style.display = 'block';
-        }
-      }
-    }
-  </script>
+  <script src="./js/pessoal.js"></script> 
+  <script src="./js/bootstrap.bundle.min.js"></script> 
 </body>
 </html>
