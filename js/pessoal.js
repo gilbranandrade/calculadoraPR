@@ -1,9 +1,9 @@
 function handleFormSubmission(event) {
-    event.preventDefault(); // Prevent form submission if validation fails
+    event.preventDefault(); 
     if (this.checkValidity() === false) {
-        event.stopPropagation(); // Stop the event from propagating further
+        event.stopPropagation(); 
     }
-    this.classList.add("was-validated"); // Add 'was-validated' class to enable Bootstrap's styling
+    this.classList.add("was-validated"); 
 }
 
 function calculaLPO() {
@@ -40,20 +40,28 @@ function calculaLPO() {
             col1.innerHTML = titulos[i];
 
             if (document.getElementById('mult5').checked){
-                var resto = (lpo * porcentagem) % 5;
-                var arredonda = 0;
-                if (resto < 2.49) {
-                    arredonda = (lpo * porcentagem) - resto;
+                var restoKg = (lpo * porcentagem) % 5;
+                var arredondaKg = 0;
+                var arredondaLb = 0;
+                if (restoKg < 2.49) {
+                    arredondaKg = (lpo * porcentagem) - restoKg;
                 } else {
-                    arredonda = (lpo * porcentagem) + (5 - resto);
+                    arredondaKg = (lpo * porcentagem) + (5 - restoKg);
+                }
+                var restoLb = (lpo * porcentagem * 2.20462262185) % 5;
+                var arredondaLb = 0;
+                if (restoLb < 2.49) {
+                    arredondaLb = (lpo * porcentagem * 2.20462262185) - restoLb;
+                } else {
+                    arredondaLb = (lpo * porcentagem * 2.20462262185) + (5 - restoLb);
                 }
 
-                col2.innerHTML = arredonda + " kg";
+                col2.innerHTML = arredondaKg.toFixed(0) + " kg";
+                col3.innerHTML = arredondaLb.toFixed(0) + " lb";
             } else {
                 col2.innerHTML = (lpo * porcentagem).toFixed(0) + " kg"; // .toFixed controla as casas decimais
+                col3.innerHTML = (lpo * porcentagem * 2.20462262185).toFixed(0) + " lb";
             }
-
-            col3.innerHTML = (lpo * porcentagem * 2.20462262185).toFixed(0) + " lb";
 
             porcentagem -= 0.05;
         }
