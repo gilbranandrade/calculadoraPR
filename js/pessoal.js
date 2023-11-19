@@ -38,8 +38,20 @@ function calculaLPO() {
             var col3 = linha.insertCell(2);
 
             col1.innerHTML = titulos[i];
-            
-            col2.innerHTML = (lpo * porcentagem).toFixed(0) + " kg"; // .toFixed controla as casas decimais
+
+            if (document.getElementById('mult5').checked){
+                var resto = (lpo * porcentagem) % 5;
+                var arredonda = 0;
+                if (resto < 2.49) {
+                    arredonda = (lpo * porcentagem) - resto;
+                } else {
+                    arredonda = (lpo * porcentagem) + (5 - resto);
+                }
+
+                col2.innerHTML = arredonda + " kg";
+            } else {
+                col2.innerHTML = (lpo * porcentagem).toFixed(0) + " kg"; // .toFixed controla as casas decimais
+            }
 
             col3.innerHTML = (lpo * porcentagem * 2.20462262185).toFixed(0) + " lb";
 
