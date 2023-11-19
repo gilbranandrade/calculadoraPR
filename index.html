@@ -4,6 +4,16 @@
   <title>Calculadora de Treino</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <style>
+    .table {
+      --bs-table-hover-bg: rgba(13, 109, 253, 0.25) !important;
+    }
+    .badge {
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      font-size: 0.75em !important;
+      font-weight: 500 !important;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -27,10 +37,14 @@
     </div>
 
     <div id="formLPO">
-      <form id="calculator">
+      <form id="calcLPO" class="needs-validation" novalidate>
         <div class="row form-floating mb-3">
-          <input type="text" class="form-control" id="lpo" name="lpo" placeholder="N">
+          <input type="text" class="form-control" id="lpo" name="lpo" placeholder="N" required>
+          <div class="invalid-feedback">
+            Digite o valor em quilos!
+          </div>
           <label for="lpo">Referência de Carga (kg)</label>
+      
         </div>
         <!-- <div class="row mb-3">
           <div class="form-check form-switch">
@@ -39,7 +53,7 @@
           </div>
         </div> -->
         <div class="d-grid gap-2 row mb-3">
-          <button type="button" class="btn btn-primary" onclick="calculaLPO()">Calcular %</button>
+          <button type="submit" class="btn btn-primary" onclick="calculaLPO()">Calcular %</button>
         </div>
       </form>
 
@@ -62,13 +76,16 @@
     </div>
 
     <div id="formCorrida" style="display: none;">
-      <form id="calculator">
+      <form id="calcCorrida" class="needs-validation" novalidate>
         <div class="row form-floating mb-3"">
-          <input type="text" id="corrida" name="corrida" class="form-control" placeholder="mm:ss">
+          <input type="text" id="corrida" name="corrida" class="form-control" placeholder="mm:ss" required>
+          <div class="invalid-feedback">
+            Digite o valor em minutos e segundos!
+          </div>
           <label for="corrida">Referência de Ritmo (mm:ss)</label>
         </div>
         <div class="d-grid gap-2 row mb-3">
-          <button type="button" class="btn btn-primary" onclick="calculaCorrida()">Calcular %</button>
+          <button type="submit" class="btn btn-primary" onclick="calculaCorrida()">Calcular %</button>
         </div>
       </form>
 
@@ -91,7 +108,7 @@
     </div>
   
     <footer class=" mb-3 text-end">
-      <span class="badge bg-dark bg-opacity-100">Desenvolvido por Gilbran Andrade</span>
+      <span class="badge text-black-50">Desenvolvido por Gilbran Andrade</span>
     </footer>
   </div>
 
